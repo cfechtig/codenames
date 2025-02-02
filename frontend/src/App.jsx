@@ -2,31 +2,28 @@ import { c } from "/src/lib/c";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-const CardTypeColorMap = {
-  F: "bg-[#348E47]",
-  B: "bg-[#D4C297]",
-  A: "bg-gray-500",
-};
-
 function App() {
+  const [board, setBoard] = useState({});
+  const [turn, setTurn] = useState("HUMAN");
+  const [hint, setHint] = useState("");
+  const [hintsRemaining, setHintsRemaining] = useState(9);
+  const [strikes, setStrikes] = useState(0);
+
   const { register, handleSubmit, setValue, resetField } = useForm();
 
-  const onHint = async (data) => {
+  const onHint = async ({ hint }) => {
     setValue("turn", turn);
-    fetch("/hint", {
+    const response = await fetch("/hint", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ data: hint }),
     });
+    const result = await response.json();
+    console.log(result);
     setHintsRemaining(hintsRemaining - 1);
   };
-
-  const [board, setBoard] = useState({});
-  const [turn, setTurn] = useState("HUMAN");
-  const [hintsRemaining, setHintsRemaining] = useState(9);
-  const [strikes, setStrikes] = useState(0);
 
   const onGuess = async (data) => {
     setValue("guess", data);
@@ -55,14 +52,23 @@ function App() {
     init();
   }, []);
 
+  if (hintsRemaining === 0 || strikes === 3) {
+    return (
+      <div>
+        <h1>Game Over</h1>
+        <p>Final Score: {hintsRemaining - strikes}</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>Code Names</h1>
       <p>Current Turn: {turn}</p>
       <p>Hints Remaining: {hintsRemaining}</p>
       <p>Strikes: {strikes}</p>
+      {hint && <p>Hint: {hint}</p>}
       <form onSubmit={handleSubmit(onHint)}>
-        <input {...register("turn")} type="hidden" />
         <div className="grid grid-cols-5 gap-4">
           {Object.entries(board)
             .flatMap(([type, words]) =>
@@ -71,15 +77,26 @@ function App() {
             .map((word) => (
               <div
                 key={word.value}
-                className={c(CardTypeColorMap[word.type], "cursor-pointer")}
-                onClick={() => onGuess(word.value)}
+                className={c(
+                  turn === "AI" && "cursor-pointer",
+                  turn === "HUMAN" && "cursor-not-allowed",
+                  "p-4 flex justify-center items-center rounded-xl border-8",
+                  word.type === "A" && "border-black",
+                  word.type === "F" && "border-[#348E47]",
+                  word.type === "B" && "border-[#D4C297]"
+                )}
+                onClick={() => turn === "AI" && onGuess(word.value)}
               >
                 {word.value}
               </div>
             ))}
         </div>
-        <input className="border" {...register("hint")} />
-        <input className="cursor-pointer" type="submit" />
+        {turn === "HUMAN" && (
+          <div>
+            <input className="border" {...register("hint")} />
+            <input className="cursor-pointer" type="submit" />
+          </div>
+        )}
       </form>
     </div>
   );
