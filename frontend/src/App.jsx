@@ -104,11 +104,7 @@ function App() {
         <p>Strikes: {strikes}</p>
         {hint && <p>Hint: {hint}</p>}
       </div>
-      <Canvas
-        shadows
-        camera={{ position: [0, 15, 20], fov: 90 }}
-        className="h-screen"
-      >
+      <Canvas camera={{ position: [0, 15, 20], fov: 90 }} className="h-screen">
         <ambientLight intensity={0.5} />
         <directionalLight
           position={[5, 5, 5]}
@@ -122,13 +118,15 @@ function App() {
               key={word.value + i}
               text={word.value}
               position={[(i % 5) * 7, 0, Math.floor(i / 5) * 7]}
-              highlighted={i % 3 === 0}
+              type={word.type}
             />
           ))}
         </group>
         <Environment preset="studio" />
         <OrbitControls
           enableZoom={false}
+          enableRotate={false}
+          enablePan={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 3}
         />
@@ -158,13 +156,29 @@ function App() {
         </div> */}
 
         {turn === "HUMAN" && (
-          <div>
+          <div className="flex items-center gap-2">
             <input
               className="border"
               {...register("hint")}
               onKeyDown={onKeyDown}
             />
-            <input className="cursor-pointer" type="submit" hidden />
+            <input
+              className={`
+        relative px-6 py-2 rounded-lg
+        bg-gradient-to-b from-purple-900/90 to-purple-950/90
+        text-purple-300 font-medium
+        shadow-[0_0_15px_rgba(147,51,234,0.5)]
+        transition-all duration-200
+        hover:shadow-[0_0_20px_rgba(147,51,234,0.7)]
+        hover:text-purple-200
+        active:scale-95
+        backdrop-blur-sm
+        border border-purple-700/50
+        cursor-pointer
+      `}
+              type="submit"
+              value="Hint"
+            />
           </div>
         )}
       </form>
