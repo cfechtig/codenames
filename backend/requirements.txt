@@ -1,3 +1,5 @@
 fastapi
 sentence-transformers
 nltk
+fastapi
+uvicorn
