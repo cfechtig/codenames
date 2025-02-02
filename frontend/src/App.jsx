@@ -97,11 +97,21 @@ function App() {
   return (
     <div className="flex flex-col items-center h-screen">
       <img src={BgImg} alt="bg" className="absolute h-screen w-screen -z-50" />
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center m-2">
         <img src={LogoImg} alt="logo" className="h-20" />
-        <p>Current Turn: {turn}</p>
-        <p>Hints Remaining: {hintsRemaining}</p>
-        <p>Strikes: {strikes}</p>
+        <h2 className="text-white text-lg font-semibold">
+          Current Turn <span className="text-purple-300">({turn})</span>
+        </h2>
+        <div className="flex justify-between w-full m-2">
+          <div className="flex items-center gap-2 bg-[#2a1f3d] rounded-lg px-4 py-2">
+            <span className="text-purple-300 text-sm">Hints Remaining:</span>
+            <span className="text-white font-bold">{hintsRemaining}</span>
+          </div>
+          <div className="flex items-center gap-2 bg-[#2a1f3d] rounded-lg px-4 py-2">
+            <span className="text-purple-300 text-sm">Strikes:</span>
+            <span className="text-white font-bold">{strikes}</span>
+          </div>
+        </div>
         {hint && <p>Hint: {hint}</p>}
       </div>
       <Canvas camera={{ position: [0, 15, 20], fov: 90 }} className="h-screen">
