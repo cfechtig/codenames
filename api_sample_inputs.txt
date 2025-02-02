@@ -1,0 +1,69 @@
+# generate-clue sample
+{
+    "remaining_friendlies": [
+        "SECOND",
+        "ANTHEM",
+        "SMOOTHIE",
+        "PARROT",
+        "PIZZA",
+        "BABY",
+        "WIZARD",
+        "CHAIN",
+        "NERVE"
+    ],
+    "remaining_bystanders": [
+        "BRASS",
+        "BRICK",
+        "GYMNAST",
+        "PADDLE",
+        "SOUP",
+        "RIVER",
+        "GUM",
+        "PINE",
+        "COFFEE",
+        "MUSKETEER",
+        "RIFLE",
+        "SUGAR",
+        "POTTER"
+    ],
+    "remaining_assassins": [
+        "FUEL",
+        "DIRECTOR",
+        "WONDERLAND"
+    ],
+    "model_name": "default"
+}
+
+# generate-guess sample
+{
+    "clue_word": "LULLABY",
+    "clue_count": 2,
+    "remaining_words": [
+        "BRASS",
+        "FUEL",
+        "SECOND",
+        "DIRECTOR",
+        "ANTHEM",
+        "SMOOTHIE",
+        "PARROT",
+        "BRICK",
+        "GYMNAST",
+        "PADDLE",
+        "SOUP",
+        "PIZZA",
+        "BABY",
+        "WIZARD",
+        "RIVER",
+        "GUM",
+        "PINE",
+        "COFFEE",
+        "MUSKETEER",
+        "WONDERLAND",
+        "RIFLE",
+        "SUGAR",
+        "CHAIN",
+        "POTTER",
+        "NERVE"
+    ],
+    "model_name": "default"
+}
