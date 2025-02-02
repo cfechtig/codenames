@@ -4,8 +4,8 @@ import "./index.css";
 import App from "./App.jsx";
 
 async function deferRender() {
-  const { worker } = await import("./mocks/browser.js");
-  return worker.start();
+  // const { worker } = await import("./mocks/browser.js");
+  // return worker.start();
 }
 
 deferRender().then(() =>
